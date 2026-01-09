@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHOOL NO. 35 - Лента задач</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-school"></i> SCHOOL NO. 35</h1>
+            <div class="user-info">
+                <span id="userName">Иван Петров</span>
+                <div class="balance">
+                    <i class="fas fa-coins"></i>
+                    <span id="userBalance">500</span> монет
+                </div>
+                <a href="login.html" class="logout-btn">Выйти</a>
+            </div>
+        </header>
+        
+        <main class="dashboard">
+            <div class="page-header">
+                <h1><i class="fas fa-stream"></i> Лента задач</h1>
+            </div>
+            
+            <div class="content-container">
+                <div class="main-content full-width">
+                    <div class="tasks-tabs">
+                        <button class="tab-btn active" data-tab="active-tasks">АКТИВНЫЕ ЗАДАЧИ</button>
+                        <button class="tab-btn" data-tab="completed-tasks">ВЫПОЛНЕННЫЕ ЗАДАЧИ</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="active-tasks">
+                        <div class="tasks-grid" id="activeTasksGrid">
+                            <!-- Активные задачи будут загружены через JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="completed-tasks">
+                        <div class="tasks-grid" id="completedTasksGrid">
+                            <!-- Выполненные задачи будут загружены через JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="shop-preview">
+                        <h2><i class="fas fa-shopping-cart"></i> ЧТО КУПИТЬ?</h2>
+                        <div class="shop-items">
+                            <div class="shop-item">
+                                <div class="shop-item-icon"><i class="fas fa-pen"></i></div>
+                                <div class="shop-item-info">
+                                    <div class="shop-item-title">НАБОР РУЧЕК</div>
+                                    <div class="shop-item-description">Набор из 10 ручек разных цветов</div>
+                                </div>
+                                <div class="shop-item-price">50 <i class="fas fa-coins"></i></div>
+                                <button class="btn-small">Купить</button>
+                            </div>
+                            <div class="shop-item">
+                                <div class="shop-item-icon"><i class="fas fa-store"></i></div>
+                                <div class="shop-item-info">
+                                    <div class="shop-item-title">Весь магазин</div>
+                                    <div class="shop-item-description">Перейти в магазин для покупки товаров</div>
+                                </div>
+                                <button class="btn-primary" onclick="window.location.href='shop.html'">Перейти</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <nav class="sidebar">
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li class="nav-item active"><a href="tasks.html"><i class="fas fa-tasks"></i> Задания</a></li>
+                        <li class="nav-item"><a href="shop.html"><i class="fas fa-store"></i> Магазин</a></li>
+                        <li class="nav-item"><a href="history.html"><i class="fas fa-history"></i> История</a></li>
+                        <li class="nav-item"><a href="rating.html"><i class="fas fa-chart-line"></i> Рейтинг</a></li>
+                        <li class="nav-item"><a href="#help"><i class="fas fa-question-circle"></i> Помощь</a></li>
+                        <li class="nav-item admin-item"><a href="#admin"><i class="fas fa-user-shield"></i> Панель админа</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Образовательная платформа с аутентификацией © 2026 SCHOOL NO. 35</p>
+            <p class="footer-links">
+                <a href="#privacy">Конфиденциальность</a> | 
+                <a href="#terms">Условия использования</a> | 
+                <a href="#contact">Контакты</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка задач
+            loadTasks();
+            
+            // Инициализация вкладок
+            initTabs();
+            
+            // Инициализация данных, если они отсутствуют
+            initializeData();
+        });
+    </script>
+</body>
+</html>

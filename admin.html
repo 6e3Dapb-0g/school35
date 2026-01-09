@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHOOL NO. 35 - Админ панель</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-school"></i> SCHOOL NO. 35</h1>
+            <div class="user-info">
+                <span id="userName">Сергей Алексеев (Администратор)</span>
+                <div class="balance">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Админ панель</span>
+                </div>
+                <a href="index.html" class="logout-btn">Вернуться на сайт</a>
+            </div>
+        </header>
+        
+        <main class="dashboard">
+            <div class="page-header">
+                <h1><i class="fas fa-user-shield"></i> Административная панель</h1>
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <i class="fas fa-users"></i>
+                        <span>Пользователей: <strong id="totalUsers">0</strong></span>
+                    </div>
+                    <div class="admin-stat">
+                        <i class="fas fa-tasks"></i>
+                        <span>Заданий: <strong id="totalTasks">0</strong></span>
+                    </div>
+                    <div class="admin-stat">
+                        <i class="fas fa-store"></i>
+                        <span>Товаров: <strong id="totalProducts">0</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-container">
+                <div class="main-content full-width">
+                    <div class="admin-tabs">
+                        <button class="tab-btn active" data-tab="users">Управление пользователями</button>
+                        <button class="tab-btn" data-tab="tasks">Управление заданиями</button>
+                        <button class="tab-btn" data-tab="products">Управление товарами</button>
+                        <button class="tab-btn" data-tab="transactions">Транзакции</button>
+                        <button class="tab-btn" data-tab="settings">Настройки системы</button>
+                    </div>
+                    
+                    <!-- Вкладка управления пользователями -->
+                    <div class="tab-content active" id="users">
+                        <div class="admin-section">
+                            <h2><i class="fas fa-user-plus"></i> Добавить пользователя</h2>
+                            <div class="admin-form">
+                                <div class="form-row">
+                                    <input type="text" id="newUserName" placeholder="ФИО пользователя">
+                                    <input type="text" id="newUserLogin" placeholder="Логин">
+                                    <input type="password" id="newUserPassword" placeholder="Пароль">
+                                </div>
+                                <div class="form-row">
+                                    <input type="text" id="newUserClass" placeholder="Класс (например, 10А)">
+                                    <select id="newUserRole">
+                                        <option value="student">Ученик</option>
+                                        <option value="teacher">Учитель</option>
+                                        <option value="admin">Администратор</option>
+                                    </select>
+                                    <input type="number" id="newUserBalance" placeholder="Начальный баланс" value="100">
+                                </div>
+                                <button id="addUserBtn" class="btn-primary">Добавить пользователя</button>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h2><i class="fas fa-users"></i> Список пользователей</h2>
+                            <div class="search-box">
+                                <input type="text" id="userSearch" placeholder="Поиск пользователей...">
+                                <button class="btn-small"><i class="fas fa-search"></i></button>
+                            </div>
+                            <div class="users-table" id="usersTable">
+                                <!-- Список пользователей будет загружен через JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h2><i class="fas fa-coins"></i> Управление балансами</h2>
+                            <div class="balance-management">
+                                <div class="balance-action">
+                                    <h3>Начислить монеты</h3>
+                                    <div class="form-row">
+                                        <input type="text" id="bonusUserName" placeholder="Логин пользователя">
+                                        <input type="number" id="bonusAmount" placeholder="Сумма" value="50">
+                                        <input type="text" id="bonusReason" placeholder="Причина начисления">
+                                        <button id="addBonusBtn" class="btn-primary">Начислить</button>
+                                    </div>
+                                </div>
+                                <div class="balance-action">
+                                    <h3>Списать монеты</h3>
+                                    <div class="form-row">
+                                        <input type="text" id="fineUserName" placeholder="Логин пользователя">
+                                        <input type="number" id="fineAmount" placeholder="Сумма" value="30">
+                                        <input type="text" id="fineReason" placeholder="Причина списания">
+                                        <button id="addFineBtn" class="btn-danger">Списать</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка управления заданиями -->
+                    <div class="tab-content" id="tasks">
+                        <div class="admin-section">
+                            <h2><i class="fas fa-tasks"></i> Создать задание</h2>
+                            <div class="admin-form">
+                                <div class="form-row">
+                                    <input type="text" id="newTaskSubject" placeholder="Предмет/Категория">
+                                    <input type="text" id="newTaskTitle" placeholder="Название задания">
+                                    <input type="number" id="newTaskReward" placeholder="Награда (монет)" value="50">
+                                </div>
+                                <div class="form-row">
+                                    <textarea id="newTaskDesc" placeholder="Описание задания" rows="3"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <input type="date" id="newTaskDeadline" placeholder="Срок выполнения">
+                                    <select id="newTaskStatus">
+                                        <option value="active">Активно</option>
+                                        <option value="inactive">Неактивно</option>
+                                    </select>
+                                    <button id="createTaskBtn" class="btn-primary">Создать задание</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h2><i class="fas fa-list"></i> Все задания</h2>
+                            <div class="tasks-table" id="adminTasksTable">
+                                <!-- Список заданий будет загружен через JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка управления товарами -->
+                    <div class="tab-content" id="products">
+                        <div class="admin-section">
+                            <h2><i class="fas fa-plus-circle"></i> Добавить товар</h2>
+                            <div class="admin-form">
+                                <div class="form-row">
+                                    <input type="text" id="newProductTitle" placeholder="Название товара">
+                                    <input type="number" id="newProductPrice" placeholder="Цена" value="100">
+                                    <select id="newProductCategory">
+                                        <option value="school">Школьные принадлежности</option>
+                                        <option value="privileges">Привилегии</option>
+                                        <option value="services">Услуги</option>
+                                        <option value="other">Другое</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <textarea id="newProductDesc" placeholder="Описание товара" rows="3"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <input type="number" id="newProductStock" placeholder="Количество на складе" value="10">
+                                    <select id="newProductStatus">
+                                        <option value="available">В наличии</option>
+                                        <option value="out_of_stock">Нет в наличии</option>
+                                    </select>
+                                    <button id="createProductBtn" class="btn-primary">Добавить товар</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h2><i class="fas fa-store"></i> Управление товарами</h2>
+                            <div class="products-table" id="adminProductsTable">
+                                <!-- Список товаров будет загружен через JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка транзакций -->
+                    <div class="tab-content" id="transactions">
+                        <div class="admin-section">
+                            <h2><i class="fas fa-exchange-alt"></i> История транзакций</h2>
+                            <div class="filters">
+                                <select id="transactionTypeFilter">
+                                    <option value="all">Все транзакции</option>
+                                    <option value="income">Начисления</option>
+                                    <option value="expense">Списания</option>
+                                    <option value="purchase">Покупки</option>
+                                </select>
+                                <input type="date" id="transactionDateFrom">
+                                <input type="date" id="transactionDateTo">
+                                <button id="filterTransactionsBtn" class="btn-primary">Применить</button>
+                                <button id="exportTransactionsBtn" class="btn-secondary">Экспорт</button>
+                            </div>
+                            <div class="transactions-table" id="transactionsTable">
+                                <!-- Список транзакций будет загружен через JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h2><i class="fas fa-chart-bar"></i> Статистика</h2>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-title">ОБЩАЯ СУММА НАЧИСЛЕНИЙ</div>
+                                        <div class="stat-value" id="totalIncome">0</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-title">ОБЩАЯ СУММА ПОКУПОК</div>
+                                        <div class="stat-value" id="totalExpenses">0</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-title">СРЕДНИЙ ЧЕК</div>
+                                        <div class="stat-value" id="avgPurchase">0</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-title">ПРОДАНО ТОВАРОВ</div>
+                                        <div class="stat-value" id="totalSold">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка настроек -->
+                    <div class="tab-content" id="settings">
+                        <div class="admin-section">
+                            <h2><i class="fas fa-cog"></i> Настройки системы</h2>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Название школы</label>
+                                    <input type="text" id="schoolName" value="SCHOOL NO. 35">
+                                </div>
+                                <div class="form-group">
+                                    <label>Начальный баланс новых пользователей</label>
+                                    <input type="number" id="defaultBalance" value="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Курс монет (1 монета = ? рублей)</label>
+                                    <input type="number" id="coinRate" value="1" step="0.1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Автоматическое начисление за регистрацию</label>
+                                    <select id="autoRegistrationBonus">
+                                        <option value="yes">Да</option>
+                                        <option value="no">Нет</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Минимальная цена товара</label>
+                                    <input type="number" id="minProductPrice" value="10">
+                                </div>
+                                <div class="form-group">
+                                    <label>Максимальная цена товара</label>
+                                    <input type="number" id="maxProductPrice" value="1000">
+                                </div>
+                                <button id="saveSettingsBtn" class="btn-primary">Сохранить настройки</button>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h2><i class="fas fa-database"></i> Управление данными</h2>
+                            <div class="data-management">
+                                <div class="data-action">
+                                    <h3>Резервное копирование</h3>
+                                    <p>Создайте резервную копию всех данных системы</p>
+                                    <button id="backupBtn" class="btn-primary">Создать бэкап</button>
+                                </div>
+                                <div class="data-action">
+                                    <h3>Восстановление</h3>
+                                    <p>Восстановите данные из резервной копии</p>
+                                    <input type="file" id="restoreFile" accept=".json">
+                                    <button id="restoreBtn" class="btn-secondary">Восстановить</button>
+                                </div>
+                                <div class="data-action danger">
+                                    <h3>Опасная зона</h3>
+                                    <p>Очистка всех данных системы (действие необратимо!)</p>
+                                    <button id="resetDataBtn" class="btn-danger">Сбросить все данные</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Административная панель © 2026 SCHOOL NO. 35</p>
+            <p class="footer-links">
+                <a href="index.html">Вернуться на сайт</a> | 
+                <a href="#logs">Логи системы</a> | 
+                <a href="#support">Техподдержка</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Модальные окна для админки -->
+    <div id="editUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Редактирование пользователя</h2>
+            <div class="modal-form">
+                <input type="hidden" id="editUserId">
+                <div class="form-group">
+                    <label>ФИО</label>
+                    <input type="text" id="editUserName">
+                </div>
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" id="editUserLogin">
+                </div>
+                <div class="form-group">
+                    <label>Класс</label>
+                    <input type="text" id="editUserClass">
+                </div>
+                <div class="form-group">
+                    <label>Роль</label>
+                    <select id="editUserRole">
+                        <option value="student">Ученик</option>
+                        <option value="teacher">Учитель</option>
+                        <option value="admin">Администратор</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Баланс</label>
+                    <input type="number" id="editUserBalance">
+                </div>
+                <div class="modal-actions">
+                    <button id="saveUserBtn" class="btn-primary">Сохранить</button>
+                    <button id="deleteUserBtn" class="btn-danger">Удалить</button>
+                    <button id="cancelEditBtn" class="btn-secondary">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Редактирование товара</h2>
+            <div class="modal-form">
+                <input type="hidden" id="editProductId">
+                <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" id="editProductTitle">
+                </div>
+                <div class="form-group">
+                    <label>Описание</label>
+                    <textarea id="editProductDesc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="number" id="editProductPrice">
+                </div>
+                <div class="form-group">
+                    <label>Категория</label>
+                    <select id="editProductCategory">
+                        <option value="school">Школьные принадлежности</option>
+                        <option value="privileges">Привилегии</option>
+                        <option value="services">Услуги</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Количество</label>
+                    <input type="number" id="editProductStock">
+                </div>
+                <div class="form-group">
+                    <label>Статус</label>
+                    <select id="editProductStatus">
+                        <option value="available">В наличии</option>
+                        <option value="out_of_stock">Нет в наличии</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button id="saveProductBtn" class="btn-primary">Сохранить</button>
+                    <button id="deleteProductBtn" class="btn-danger">Удалить</button>
+                    <button id="cancelProductEditBtn" class="btn-secondary">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация данных
+            initializeData();
+            
+            // Загрузка данных в админ панель
+            loadAdminData();
+            
+            // Инициализация вкладок
+            initTabs();
+            
+            // Обработчики для админки
+            setupAdminHandlers();
+        });
+    </script>
+</body>
+</html>

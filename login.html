@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHOOL NO. 35 - Вход</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1><i class="fas fa-school"></i> SCHOOL NO. 35</h1>
+            <p>Образовательная платформа с аутентификацией</p>
+        </div>
+        
+        <div class="auth-form-container">
+            <h2><i class="fas fa-sign-in-alt"></i> Логин</h2>
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginUsername">Логин</label>
+                    <input type="text" id="loginUsername" placeholder="Введите логин" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Пароль</label>
+                    <input type="password" id="loginPassword" placeholder="Введите пароль" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginFullName">Фамилия Имя</label>
+                    <input type="text" id="loginFullName" placeholder="Введите фамилию и имя" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginClass">Класс</label>
+                    <input type="text" id="loginClass" placeholder="Например: 10А" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ваша роль:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="roleStudent" name="role" value="student" checked>
+                            <label for="roleStudent">Ученик</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="roleTeacher" name="role" value="teacher">
+                            <label for="roleTeacher">Учитель</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-auth">Войти</button>
+                
+                <div class="auth-links">
+                    <p>Зарегистрировать аккаунт? <a href="register.html">Зарегистрироваться</a></p>
+                </div>
+            </form>
+        </div>
+        
+        <div class="auth-footer">
+            <p>Образовательная платформа с аутентификацией © 2026 SCHOOL NO. 35</p>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация данных, если они отсутствуют
+            initializeData();
+            
+            // Обработчик формы входа
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('loginUsername').value;
+                const password = document.getElementById('loginPassword').value;
+                const fullName = document.getElementById('loginFullName').value;
+                const userClass = document.getElementById('loginClass').value;
+                const role = document.querySelector('input[name="role"]:checked').value;
+                
+                // Простая проверка (в реальном приложении нужно проверять на сервере)
+                if (username && password && fullName && userClass) {
+                    // Сохраняем информацию о пользователе
+                    const user = {
+                        username: username,
+                        fullName: fullName,
+                        class: userClass,
+                        role: role,
+                        balance: 500, // Начальный баланс
+                        isLoggedIn: true
+                    };
+                    
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    // Перенаправляем на главную страницу
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Пожалуйста, заполните все поля');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
